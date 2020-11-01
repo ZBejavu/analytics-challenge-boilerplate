@@ -867,6 +867,23 @@ export const getTransactionsByUserId = (userId: string) => getTransactionsBy("re
 
 
 // ----------------- event functions -----------------
+export function getStartOfDay(dateNow:number): number{
+  let year = new Date(dateNow).getFullYear()
+  let day = new Date(dateNow).getDate()
+  let month = new Date(dateNow).getMonth() +1;
+  const startOfDay = new Date(`${year}/${month}/${day}`);
+  return startOfDay.getTime();
+}
+export function getDateInFormat(dateNow:number): string{
+  let year = new Date(dateNow).getFullYear()
+  let day = new Date(dateNow).getDate()
+  let month = new Date(dateNow).getMonth() +1;
+  return `${year}/${month}/${day}`;
+}
+export function getWeekFromNow(dateNow:number): number {
+  const week = 1000*60*60*24*7;
+  return dateNow + week;
+}
 export const getAllEvents = () => db.get(EVENT_TABLE).value();
 export const addEvent = (event: Event) => {
   db.get(EVENT_TABLE).push(event).write();
@@ -937,8 +954,8 @@ export const getTodaysEvents = () => {
   return events;
 }
 
-export const getWeeksEvents = (array?:Event[])=> {
-  const timeToday = new Date().getTime();
+export const getWeeksEvents = (array?:Event[], endTime?:number)=> {
+  const timeToday = endTime || new Date().getTime();
   const dayInMilliseconds = 1000*60*60*24;
   let dateEnd:number, dateStart:number;
   dateEnd = timeToday + dayInMilliseconds;
