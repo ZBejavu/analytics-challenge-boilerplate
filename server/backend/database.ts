@@ -49,7 +49,9 @@ import {
   NotificationResponseItem,
   TransactionQueryPayload,
   DefaultPrivacyLevel,
-  Event
+  Event,
+  browser,
+  eventName
 } from "../../client/src/models";
 import Fuse from "fuse.js";
 import {
@@ -862,6 +864,183 @@ export const getTransactionsBy = (key: string, value: string) =>
 
 /* istanbul ignore next */
 export const getTransactionsByUserId = (userId: string) => getTransactionsBy("receiverId", userId);
+
+
+// ----------------- event functions -----------------
+export const getAllEvents = () => db.get(EVENT_TABLE).value();
+export const addEvent = (event: Event) => {
+  db.get(EVENT_TABLE).push(event).write();
+};
+export const getEventByBrowser = (browser:browser, array?:Event[]) => {
+  if(array){
+    return array.filter((event : Event) => event.browser === browser);
+  }
+  return db.get(EVENT_TABLE).value().filter((event : Event) => event.browser === browser)
+}
+export const getEventBySearch = (value:any, array?:Event[]) => {
+  if(array){
+    return array.filter((event) => {
+      let found:boolean = false;
+      if(event.session_id.includes('100')){
+        found = true;
+      }
+      return found
+    });
+  }
+  return db.get(EVENT_TABLE).value().filter((event) => {
+    let found:boolean = false;
+    if(event.session_id.includes('100')){
+      found = true;
+    }
+    return found
+  });
+}
+export const getEventByType = (name:eventName, array?:Event[]) => {
+  if(array){
+    return array.filter((event : Event) =>{
+      // console.log(event.name , name);
+      return event.name === name
+    });
+  }
+  return db.get(EVENT_TABLE).value().filter((event : Event) => event.name === name)
+}
+export const getEventByDate = (date:'+date'|'-date', array?:Event[]) => {
+  if(array){
+    return array.sort((a:Event,b:Event) => {
+      if(date === '+date'){
+        return a.date-b.date;
+      }
+        return b.date-a.date;
+    });
+  }
+  return db.get(EVENT_TABLE).value()
+  .sort((a:Event,b:Event) => {
+    if(b.date > a.date){
+      return date === '+date'? 1 : 0
+    }else{
+      return date === '+date'? 0 : 1
+    }
+  });
+}
+export const getTodaysEvents = () => {
+  const timeToday = new Date();
+  const events: Event[] = db.get(EVENT_TABLE).value().filter((event: Event) => {
+    const eventDate = new Date(event.date);
+    if(
+      eventDate.getFullYear() === timeToday.getFullYear() &&
+      eventDate.getMonth() === timeToday.getMonth() &&
+      eventDate.getDate() === timeToday.getDate() 
+    ){
+      return true;
+    }else{
+      return false;
+    }
+  })
+  return events;
+}
+
+export const getWeeksEvents = ()=> {
+  const timeToday = new Date().getTime();
+  const dayInMilliseconds = 1000*60*60*24;
+  let dateEnd:number, dateStart:number;
+  dateEnd = timeToday + dayInMilliseconds;
+  let year = new Date(dateEnd).getFullYear()
+  let day = new Date(dateEnd).getDate()
+  let month = new Date(dateEnd).getMonth() +1;
+  dateEnd = new Date(`${year}/${month}/${day}`).getTime();
+  dateStart = dateEnd - 7*dayInMilliseconds;
+  const eventsInRange : Event[] = db.get(EVENT_TABLE)
+  .value()
+  .filter((event : Event) => event.date >= dateStart && event.date < dateEnd);
+  return eventsInRange;
+}
+
+export const getUniqueDaySessions = (dateStart:number, dateEnd:number) => {
+  let sessionsIds:string[] = [];
+  let hours:number[] = [];
+  const hourInMiliseconds = 1000*60*60;
+  const eventsInRange = db.get(EVENT_TABLE).value().filter(event => event.date >= dateStart && event.date < dateEnd);
+  for(let i = dateStart; i < dateEnd; i+= hourInMiliseconds){
+    const date = new Date(i)
+    let hour = date.getHours();
+    hours.push(hour);
+  }
+  interface sessionArrayHours {
+    hour:number;
+    count:number;
+  }
+  const arrToSend:sessionArrayHours[] = [];
+  hours.forEach(hour => {
+    arrToSend.push({
+      hour: hour,
+      count: 0
+    })
+  })
+  eventsInRange.forEach(event => {
+    const date = new Date(event.date);
+    const hour = date.getHours();
+    if(!sessionsIds.includes(event.session_id)){
+      sessionsIds.push(event.session_id);
+      const counterToAdd = arrToSend.find(object => object.hour === hour)
+      if(counterToAdd){
+        counterToAdd.count++;
+      }
+    }
+  })
+  console.log('arrToSend', arrToSend)
+  return arrToSend;
+}
+
+export const getUniqueWeekSessions = (dateStart:number, dateEnd:number) => {
+  
+  let sessionsIds:string[] = [];
+  let dates:string[] = [];
+  const dayInMilliseconds = 1000*60*60*24;
+  const eventsInRange = db.get(EVENT_TABLE).value().filter(event => event.date >= dateStart && event.date < dateEnd);
+  let prevday:number = 0;
+  for(let i = dateStart; i < dateEnd; i+= dayInMilliseconds){
+    const date = new Date(i)
+    let year = date.getFullYear()
+    let day = date.getDate()
+    if(day === prevday){
+      day ++;
+      i += dayInMilliseconds;
+    }
+    let month = date.getMonth() +1;
+    dates.push(`${year}/${month}/${day}`);
+    //dates.push(date.toString());
+    prevday = day;
+  }
+  interface sessionArray {
+    date:string;
+    count:number;
+  }
+  const arrToSend:sessionArray[] = [];
+  dates.forEach(date => {
+    arrToSend.push({
+      date: date,
+      count: 0
+    })
+  })
+  eventsInRange.forEach(event => {
+    const date = new Date(event.date);
+    let year = date.getFullYear()
+    let day = date.getDate()
+    let month = date.getMonth() +1;
+    let structuredDate = `${year}/${month}/${day}`;
+    if(!sessionsIds.includes(event.session_id)){
+      sessionsIds.push(event.session_id);
+      const counterToAdd = arrToSend.find(object => object.date === structuredDate)
+      if(counterToAdd){
+        counterToAdd.count++;
+      }
+    }
+  })
+  console.log('arrToSend', arrToSend)
+  return arrToSend;
+
+}
+
 
 
 export default db;
