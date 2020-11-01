@@ -25,6 +25,7 @@ import {
   userFieldsValidator,
   isUserValidator,
 } from "./validators";
+import mockData from './__tests__/mock_data';
 const router = express.Router();
 
 // Routes
@@ -45,7 +46,7 @@ router.get('/all', (req: Request, res: Response) => {
 router.get('/all-filtered', (req: Request, res: Response) => {
   const offset = req.query.offset;
   const browser:browser = req.query.browser;
-  const search = req.query.search;
+  const search:RegExp = req.query.search;
   const type:eventName = req.query.type;
   const sort:'+date'|'-date' = req.query.sorting;
   let more:boolean = false;
@@ -87,7 +88,6 @@ router.get('/by-days/:offset', (req: Request, res: Response) => {
   dateEnd = new Date(`${year}/${month}/${day}`).getTime();
   dateStart = dateEnd - dayInMilliseconds*7;
   const dates = getUniqueWeekSessions(dateStart,dateEnd);
-  // console.log('--------------',search)
   res.send(dates);
 });
 
@@ -114,12 +114,48 @@ router.get('/today', (req: Request, res: Response) => {
 });
 
 router.get('/week', (req: Request, res: Response) => {
-  const weeksEvents = getWeeksEvents();
-  res.send(weeksEvents)
+  const weeksEvents = getWeeksEvents(mockData.events);
+  const sessionIds:string[] = [];
+  let sum:number = 0;
+  weeksEvents.forEach((event, i) => {
+    if(!sessionIds.includes(event.session_id)){
+      sessionIds.push(event.session_id);
+      sum++;
+    }
+  })
+  res.json({events: weeksEvents, sum : sum})
 });
 
 router.get('/retention', (req: Request, res: Response) => {
-  const {dayZero} = req.query
+  const dayZero  = Number(req.query.dayZero);
+  if(dayZero){
+    const timeNow = Date.now();
+    const diff: number = timeNow - dayZero;
+    const day = 1000*60*60*24;
+    const days:string[] = [];
+    const weeks:[string[]] = [[]];
+    let index = 0, j= 0;
+    for(let i = dayZero; i< timeNow; i+= day){
+      if(j === 0 && i!== 0){
+        weeks.push([]);
+      }
+      let year = new Date(i).getFullYear()
+      let day = new Date(i).getDate()
+      let month = new Date(i).getMonth() +1;
+      weeks[index].push(`${year}/${month}/${day}`);
+      if(j === 6){
+        j = 0;
+        i++;
+      }else {
+        i++;
+        j++;
+      }
+    }
+    return res.json(weeks)
+
+
+  }
+
   res.send('/retention')
 });
 router.get('/:eventId',(req : Request, res : Response) => {

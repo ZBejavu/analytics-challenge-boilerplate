@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 require("dotenv").config();
-
+import fuckall from 'dotenv';
 import shortid from "shortid";
 import faker from "faker";
 import bcrypt from "bcryptjs";

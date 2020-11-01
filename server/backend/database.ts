@@ -877,23 +877,21 @@ export const getEventByBrowser = (browser:browser, array?:Event[]) => {
   }
   return db.get(EVENT_TABLE).value().filter((event : Event) => event.browser === browser)
 }
-export const getEventBySearch = (value:any, array?:Event[]) => {
+export const getEventBySearch = (value:RegExp, array?:any[]) => {
+  let myArray:any[] = getAllEvents();
   if(array){
-    return array.filter((event) => {
+    myArray = array;
+  }
+    const regex:RegExp = new RegExp(value, "i");
+    return myArray.filter((event) => {
       let found:boolean = false;
-      if(event.session_id.includes('100')){
-        found = true;
+      for(const key in event){
+        if(regex.test(event[key])){
+          found = true;
+        }
       }
       return found
     });
-  }
-  return db.get(EVENT_TABLE).value().filter((event) => {
-    let found:boolean = false;
-    if(event.session_id.includes('100')){
-      found = true;
-    }
-    return found
-  });
 }
 export const getEventByType = (name:eventName, array?:Event[]) => {
   if(array){
@@ -939,7 +937,7 @@ export const getTodaysEvents = () => {
   return events;
 }
 
-export const getWeeksEvents = ()=> {
+export const getWeeksEvents = (array?:Event[])=> {
   const timeToday = new Date().getTime();
   const dayInMilliseconds = 1000*60*60*24;
   let dateEnd:number, dateStart:number;
@@ -949,9 +947,11 @@ export const getWeeksEvents = ()=> {
   let month = new Date(dateEnd).getMonth() +1;
   dateEnd = new Date(`${year}/${month}/${day}`).getTime();
   dateStart = dateEnd - 7*dayInMilliseconds;
-  const eventsInRange : Event[] = db.get(EVENT_TABLE)
+  const eventsInRange : Event[] =!array ? db.get(EVENT_TABLE)
   .value()
-  .filter((event : Event) => event.date >= dateStart && event.date < dateEnd);
+  .filter((event : Event) => event.date >= dateStart && event.date < dateEnd)
+  : array.filter((event : Event) => event.date >= dateStart && event.date < dateEnd)
+
   return eventsInRange;
 }
 
@@ -993,10 +993,10 @@ export const getUniqueDaySessions = (dateStart:number, dateEnd:number) => {
 
 export const getUniqueWeekSessions = (dateStart:number, dateEnd:number) => {
   
-  let sessionsIds:string[] = [];
   let dates:string[] = [];
   const dayInMilliseconds = 1000*60*60*24;
   const eventsInRange = db.get(EVENT_TABLE).value().filter(event => event.date >= dateStart && event.date < dateEnd);
+  console.log('========================================================', eventsInRange.length)
   let prevday:number = 0;
   for(let i = dateStart; i < dateEnd; i+= dayInMilliseconds){
     const date = new Date(i)
@@ -1015,25 +1015,42 @@ export const getUniqueWeekSessions = (dateStart:number, dateEnd:number) => {
     date:string;
     count:number;
   }
+  let sessionsIds: [{date:string, sessionIds:string[] }];
   const arrToSend:sessionArray[] = [];
   dates.forEach(date => {
     arrToSend.push({
       date: date,
       count: 0
     })
+    if(!sessionsIds){
+      sessionsIds = [{
+        date: date,
+        sessionIds: []
+      }]
+    }else {
+      sessionsIds.push({
+        date: date,
+        sessionIds: []
+      })
+    }
   })
+  let sum = 0;
   eventsInRange.forEach(event => {
     const date = new Date(event.date);
     let year = date.getFullYear()
     let day = date.getDate()
     let month = date.getMonth() +1;
     let structuredDate = `${year}/${month}/${day}`;
-    if(!sessionsIds.includes(event.session_id)){
-      sessionsIds.push(event.session_id);
-      const counterToAdd = arrToSend.find(object => object.date === structuredDate)
+    const dayToCheck = sessionsIds.find(object => object.date === structuredDate);
+    if(dayToCheck && !dayToCheck.sessionIds.includes(event.session_id)){//!sessionsIds.includes(event.session_id)
+      dayToCheck.sessionIds.push(event.session_id)
+      const counterToAdd = arrToSend.find(object =>object.date === structuredDate)
       if(counterToAdd){
         counterToAdd.count++;
       }
+    } else {
+      sum++;
+      console.log('FUCK MEEEEEEE', structuredDate, event.session_id, sum)
     }
   })
   console.log('arrToSend', arrToSend)
