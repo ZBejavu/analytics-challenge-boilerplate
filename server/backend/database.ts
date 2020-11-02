@@ -880,6 +880,14 @@ export function getDateInFormat(dateNow:number): string{
   let month = new Date(dateNow).getMonth() +1;
   return `${year}/${month}/${day}`;
 }
+export function getDateInFullFormat(dateNow:number): string{
+  let year = new Date(dateNow).getFullYear()
+  let day = new Date(dateNow).getDate()
+  let month = new Date(dateNow).getMonth() +1;
+  let hours = new Date(dateNow).getHours()
+  let minutes = new Date(dateNow).getMinutes()
+  return `${year}/${month}/${day}/${hours}/${minutes}`;
+}
 export function getWeekFromNow(dateNow:number): number {
   const week = 1000*60*60*24*7;
   return dateNow + week;

@@ -17,7 +17,8 @@ import {
   getEventByDate,
   getStartOfDay,
   getDateInFormat,
-  getWeekFromNow
+  getWeekFromNow,
+  getDateInFullFormat
 } from "./database";
 import { browser, Event, eventName, weeklyRetentionObject } from "../../client/src/models/event";
 import { ensureAuthenticated, validateMiddleware } from "./helpers";
@@ -141,11 +142,22 @@ router.get('/retention', async (req: Request, res: Response) => {
     const timeNow = getStartOfDay(Date.now()+ day);
     const weeks:number[] = [dayZero];
     for(let i = dayZero + week; i<= timeNow; i+= week){
-          weeks.push(i);
+      if(new Date(i).getHours() != 0){
+        weeks.push(getStartOfDay(i+day));
+      }else {
+        weeks.push(i);
+      }
     }
     const allEvents = getAllEvents()
     const weekEvents = weeks.map((week, i) => {
-      const weekEvents2 = allEvents.filter(event => event.date >= week && event.date < getWeekFromNow(week));
+      let weekfromnow:number;
+      if(i < weeks.length -1){
+        weekfromnow = weeks[i+1];
+      }else{
+        weekfromnow = getWeekFromNow(week);
+      }
+      const weekEvents2 = allEvents.filter(event => event.date >= week && event.date < weekfromnow);
+      // console.log(getDateInFullFormat(week) , getDateInFullFormat(weekfromnow))
       return weekEvents2;
     })
     const singupsArr = weekEvents.map((week, i) => {
@@ -155,29 +167,28 @@ router.get('/retention', async (req: Request, res: Response) => {
     let arrToSend :weeklyRetentionObject[];
     for(let thisWeek = 0; thisWeek < weekEvents.length; thisWeek ++){
       const weeklyRetention = weekEvents.slice(thisWeek, weekEvents.length).map((events:Event[], i:number) =>{
-        let count = 0;
-        singupsArr[thisWeek].forEach(signup => {
-         const found = events.findIndex(event => event.distinct_user_id === signup);
-          if(found !== -1){
-            count ++;
-          }
-        })
-        return Math.round(count * 100 / singupsArr[thisWeek].length) || 100;
+        const newArr = singupsArr[thisWeek].filter(signup => events.some(event => event.distinct_user_id === signup))
+        return Math.round(singupsArr[thisWeek].length === 0 ? 0 :newArr.length * 100 / singupsArr[thisWeek].length);
       })
+      let weekfromnow;
+      if(thisWeek < weeks.length -1){
+        weekfromnow = weeks[thisWeek+1];
+      }else{
+        weekfromnow = getWeekFromNow(weeks[thisWeek]);
+      }
         const retentionObj:weeklyRetentionObject = {
           registrationWeek: thisWeek,
           newUsers: singupsArr[thisWeek].length,
           weeklyRetention: weeklyRetention,
           start: getDateInFormat(weeks[thisWeek]),
-          end: getDateInFormat(weeks[thisWeek] + week)
+          end: getDateInFormat(weekfromnow)
         }
         if(thisWeek === 0){
           arrToSend =[retentionObj]
         }else{
           arrToSend!.push(retentionObj)
         }
-    } 
-
+    }
     return res.json(arrToSend!);
   }else {
     res.sendStatus(401).send('forgot to put zeroDays in query params')
