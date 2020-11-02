@@ -35,17 +35,17 @@ describe("main test", () => {
     done()
   })
 
-  it.skip("can get all events", async () => {
+  it("can get all events", async () => {
     const { body: allEvents } = await request(app).get("/events/all").expect(200);
     expect(allEvents.length).toBe(300);
   });
 
-  it.skip("getting all events from the server must return array of event types", async () => {
+  it("getting all events from the server must return array of event types", async () => {
     const { body: allEvents } = await request(app).get("/events/all").expect(200);
     expect(isEventArray(allEvents)).toBe(true);
   });
 
-  it.skip("can get unique sessions count by day", async () => {
+  it("can get unique sessions count by day", async () => {
     const { body: sessionsByDays } = await request(app).get("/events/by-days/0").expect(200)
 
     expect(sessionsByDays.length).toBe(7)
@@ -62,7 +62,7 @@ describe("main test", () => {
     expect(sessionsByDays2[6].count).toBe(14);
   });
 
-  it.skip("can get unique sessions count by hour", async () => {
+  it("can get unique sessions count by hour", async () => {
     const { body: sessionsByHours } = await request(app).get("/events/by-hours/0").expect(200)
 
     expect(sessionsByHours.length).toBe(24)
@@ -83,7 +83,6 @@ describe("main test", () => {
     ).expect(200);
     
     console.log(retentionData)
-
     expect(retentionData.length).toBe(6);
     
     expect(retentionData[0].weeklyRetention).toEqual([ 100, 40, 60, 90, 80, 0 ]);
@@ -93,7 +92,7 @@ describe("main test", () => {
 
 
   });
-  it.skip("can filter events by browser", async () => {
+  it("can filter events by browser", async () => {
 
     const { body: events}  = await request(app).get("/events/all-filtered")
     .query({
@@ -106,7 +105,7 @@ describe("main test", () => {
     expect(events.events[15].browser).toBe( "chrome")
   })
 
-  it.skip("can filter events by type", async () => {
+  it("can filter events by type", async () => {
     const { body: events}  = await request(app).get("/events/all-filtered")
     .query({
       type: "signup",
@@ -119,7 +118,7 @@ describe("main test", () => {
     expect(events.events[1].session_id).toMatch(/100/i)
   })
 
-  it.skip("can sort events by date", async () => {
+  it("can sort events by date", async () => {
     const { body: events}  = await request(app).get("/events/all-filtered")
     .query({
       offset: 5,
@@ -137,7 +136,7 @@ describe("main test", () => {
     expect(events2.events[1].date).toBeGreaterThan(events2.events[0].date)
   })
 
-  it.skip("can post new event", async () => {
+  it("can post new event", async () => {
     await request(app).post("/events").send(mockData.events[0]).expect(200);
     const { body: allEvents2 } = await request(app).get("/events/all").expect(200);
     expect(allEvents2.length).toBe(301);

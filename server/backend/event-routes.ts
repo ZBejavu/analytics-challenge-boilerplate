@@ -137,33 +137,12 @@ router.get('/retention', async (req: Request, res: Response) => {
   dayZero = getStartOfDay(dayZero)
   if(dayZero){
     const day = 1000*60*60*24;
+    const week =day* 7;
     const timeNow = getStartOfDay(Date.now()+ day);
-    const days:string[] = [];
-    const weeks:number[] = [];
-    let index = 0, j= 0;
-    for(let i = dayZero; i<= timeNow; i+= day){
-      // if(j === 0 && index!== 0){
-      //   weeks.push([]);
-      // }
-      let year = new Date(i).getFullYear()
-      let day = new Date(i).getDate()
-      let month = new Date(i).getMonth() +1;
-      
-      if(j === 0 || (i + day) > timeNow){
-        if(index === 0){
-          weeks[0] = i;
-        }else
+    const weeks:number[] = [dayZero];
+    for(let i = dayZero + week; i<= timeNow; i+= week){
           weeks.push(i);
-      }
-      //weeks[index].push(`${year}/${month}/${day}`);
-      if(j === 6){
-        j = 0;
-        index++;
-      }else {
-        j++;
-      }
     }
-    //const singupsArr:[string[]] = [[]]
     const allEvents = getAllEvents()
     const weekEvents = weeks.map((week, i) => {
       const weekEvents2 = allEvents.filter(event => event.date >= week && event.date < getWeekFromNow(week));
@@ -173,26 +152,36 @@ router.get('/retention', async (req: Request, res: Response) => {
       const signupForThatWeek = getEventByType('signup',week).map((event: Event) => event.distinct_user_id );
       return signupForThatWeek;
     })
-    const fuckingRetention =[]
-    for(let indexer = 0; indexer < weekEvents.length; indexer ++){
-      const fuckingRetention2 = weekEvents.slice(indexer, weekEvents.length).map((events:Event[], i:number) =>{
+    let arrToSend :weeklyRetentionObject[];
+    for(let thisWeek = 0; thisWeek < weekEvents.length; thisWeek ++){
+      const weeklyRetention = weekEvents.slice(thisWeek, weekEvents.length).map((events:Event[], i:number) =>{
         let count = 0;
-        singupsArr[indexer].forEach(signup => {
+        singupsArr[thisWeek].forEach(signup => {
          const found = events.findIndex(event => event.distinct_user_id === signup);
           if(found !== -1){
             count ++;
           }
         })
-        return Math.round(singupsArr[indexer].length ===0 ? 100 : count * 100 / singupsArr[indexer].length);
+        return Math.round(count * 100 / singupsArr[thisWeek].length) || 100;
       })
-        fuckingRetention.push(fuckingRetention2);
-    }
-      //console.log('----------------- fuckingRetentionsss-',count);
-    console.log('----------------- fuckingRetentionsss-',fuckingRetention);
-    return res.json(singupsArr);
-  }
+        const retentionObj:weeklyRetentionObject = {
+          registrationWeek: thisWeek,
+          newUsers: singupsArr[thisWeek].length,
+          weeklyRetention: weeklyRetention,
+          start: getDateInFormat(weeks[thisWeek]),
+          end: getDateInFormat(weeks[thisWeek] + week)
+        }
+        if(thisWeek === 0){
+          arrToSend =[retentionObj]
+        }else{
+          arrToSend!.push(retentionObj)
+        }
+    } 
 
-  res.send('/retention')
+    return res.json(arrToSend!);
+  }else {
+    res.sendStatus(401).send('forgot to put zeroDays in query params')
+  }
 });
 
 router.get('/:eventId',(req : Request, res : Response) => {
