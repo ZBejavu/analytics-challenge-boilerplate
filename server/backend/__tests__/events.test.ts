@@ -84,12 +84,15 @@ describe("main test", () => {
     
     console.log(retentionData)
     expect(retentionData.length).toBe(6);
-    
-    expect(retentionData[0].weeklyRetention).toEqual([ 100, 40, 60, 90, 80, 0 ]);
+
+    expect(retentionData[0].newUsers).toBe(10);
+    expect(retentionData[0].weeklyRetention).toEqual([ 100, 30, 60, 90, 80, 0 ]);
+    expect(retentionData[1].newUsers).toBe(10);
     expect(retentionData[1].weeklyRetention).toEqual([ 100, 90, 60,100,0 ]);
+    expect(retentionData[2].newUsers).toBe(11);
     expect(retentionData[2].weeklyRetention).toEqual([ 100, 100, 82, 9 ]);
     expect(retentionData[4].newUsers).toBe(9);
-
+    expect(retentionData[4].weeklyRetention).toEqual([ 100, 44 ]);
 
   });
   it("can filter events by browser", async () => {
