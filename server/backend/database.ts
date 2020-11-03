@@ -868,11 +868,8 @@ export const getTransactionsByUserId = (userId: string) => getTransactionsBy("re
 
 // ----------------- event functions -----------------
 export function getStartOfDay(dateNow:number): number{
-  let year = new Date(dateNow).getFullYear()
-  let day = new Date(dateNow).getDate()
-  let month = new Date(dateNow).getMonth() +1;
-  const startOfDay = new Date(`${year}/${month}/${day}`);
-  return startOfDay.getTime();
+  const startOfDay = new Date(dateNow).setHours(0,0,0);
+  return startOfDay;
 }
 export function getDateInFormat(dateNow:number): string{
   let year = new Date(dateNow).getFullYear()
@@ -918,6 +915,8 @@ export const getEventBySearch = (value:RegExp, array?:any[]) => {
       return found
     });
 }
+
+
 export const getEventByType = (name:eventName, array?:Event[]) => {
   if(array){
     return array.filter((event : Event) =>{
@@ -980,18 +979,25 @@ export const getWeeksEvents = (array?:Event[], endTime?:number)=> {
   return eventsInRange;
 }
 
+export function convertNumberToHourFormat(number:number) : string{
+  if(number< 10){
+    return `0${number}:00`
+  }else{
+    return `${number}:00`
+  }
+}
 export const getUniqueDaySessions = (dateStart:number, dateEnd:number) => {
   let sessionsIds:string[] = [];
-  let hours:number[] = [];
+  let hours:string[] = [];
   const hourInMiliseconds = 1000*60*60;
   const eventsInRange = db.get(EVENT_TABLE).value().filter(event => event.date >= dateStart && event.date < dateEnd);
   for(let i = dateStart; i < dateEnd; i+= hourInMiliseconds){
     const date = new Date(i)
     let hour = date.getHours();
-    hours.push(hour);
+    hours.push(convertNumberToHourFormat(hour));
   }
   interface sessionArrayHours {
-    hour:number;
+    hour:string;
     count:number;
   }
   const arrToSend:sessionArrayHours[] = [];
@@ -1003,7 +1009,7 @@ export const getUniqueDaySessions = (dateStart:number, dateEnd:number) => {
   })
   eventsInRange.forEach(event => {
     const date = new Date(event.date);
-    const hour = date.getHours();
+    const hour = convertNumberToHourFormat(date.getHours());
     if(!sessionsIds.includes(event.session_id)){
       sessionsIds.push(event.session_id);
       const counterToAdd = arrToSend.find(object => object.hour === hour)
@@ -1022,7 +1028,10 @@ export const getUniqueWeekSessions = (dateStart:number, dateEnd:number) => {
   const dayInMilliseconds = 1000*60*60*24;
   const eventsInRange = db.get(EVENT_TABLE).value().filter(event => event.date >= dateStart && event.date < dateEnd);
   console.log('========================================================', eventsInRange.length)
-  let prevday:number = 0;
+  let prevday:number = 23424;
+
+
+
   for(let i = dateStart; i < dateEnd; i+= dayInMilliseconds){
     const date = new Date(i)
     let year = date.getFullYear()
@@ -1036,6 +1045,10 @@ export const getUniqueWeekSessions = (dateStart:number, dateEnd:number) => {
     //dates.push(date.toString());
     prevday = day;
   }
+
+
+
+
   interface sessionArray {
     date:string;
     count:number;
