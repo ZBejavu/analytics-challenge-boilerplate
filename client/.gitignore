@@ -10,7 +10,7 @@
 
 # production
 /build
-
+secrets.ts
 # misc
 .DS_Store
 .idea

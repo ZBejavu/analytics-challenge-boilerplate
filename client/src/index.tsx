@@ -12,6 +12,12 @@ const theme = createMuiTheme({
       main: "#fff",
     },
   },
+  overrides: {
+    MuiTableCell: {
+      root: {
+      }
+    }
+  }
 });
 
 ReactDOM.render(

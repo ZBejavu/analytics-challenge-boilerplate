@@ -50,6 +50,46 @@ router.get('/all', (req: Request, res: Response) => {
   res.send(allEvents)
 });
 
+router.get('/totalUserRetention', (req: Request, res: Response) => {
+  let dayZero  = Number(req.query.dayZero);
+  if(dayZero){
+  dayZero = getStartOfDay(dayZero)
+  const day = 1000*60*60*24;
+  const week = day*7;
+  const timeNow:number = getStartOfDay(Date.now()+ day);
+  const weeks:number[] = [dayZero];
+  for(let i = dayZero + week; i<= timeNow; i+= week){
+    if(new Date(i).getHours() != 0){
+      weeks.push(getStartOfDay(i+day));
+    }else {
+      weeks.push(i);
+    }
+  }
+  const totalUserRetention:{percent:number , usersInSystem:number, weekStart:string, weekEnd:string}[] = weeks.map((week:number, i:number) => {
+    const allSignups = getEventByType('signup').filter((event:Event) => {
+      return event.date < week
+    }).map(event => event.distinct_user_id);
+    let weekfromnow:number;
+    if(i < weeks.length -1){
+      weekfromnow = weeks[i+1];
+    }else{
+      weekfromnow = timeNow;
+    }
+    const allActivity = getEventByType('login').filter((event:Event) => {
+      return event.date >= week && event.date < weekfromnow;
+    }).map(event => event.distinct_user_id);
+    console.log(allActivity.length)
+
+    const uniqueActivity = allSignups.filter(userId => allActivity.some(id => userId === id));
+    const percentageFromUsers =allSignups.length === 0? 0 : Math.round(uniqueActivity.length * 100 / allSignups.length)
+    return {percent: percentageFromUsers, usersInSystem: allSignups.length, weekStart:getDateInFormat(week), weekEnd:getDateInFormat(weekfromnow)};
+  });
+
+    return res.json(totalUserRetention)
+  }
+    res.sendStatus(401).send('forgot to put zeroDays in query params');
+})
+
 router.get('/all-filtered', (req: Request, res: Response) => {
   const offset = req.query.offset;
   const browser:browser = req.query.browser;
@@ -148,13 +188,13 @@ router.get('/retention', async (req: Request, res: Response) => {
         weeks.push(i);
       }
     }
-    const allEvents = getAllEvents()
+    const allEvents = getAllEvents();
     const weekEvents = weeks.map((week, i) => {
       let weekfromnow:number;
       if(i < weeks.length -1){
         weekfromnow = weeks[i+1];
       }else{
-        weekfromnow = getWeekFromNow(week);
+        weekfromnow = timeNow;
       }
       const weekEvents2 = allEvents.filter(event => event.date >= week && event.date < weekfromnow);
       // console.log(getDateInFullFormat(week) , getDateInFullFormat(weekfromnow))
@@ -174,7 +214,7 @@ router.get('/retention', async (req: Request, res: Response) => {
       if(thisWeek < weeks.length -1){
         weekfromnow = weeks[thisWeek+1];
       }else{
-        weekfromnow = getWeekFromNow(weeks[thisWeek]);
+        weekfromnow = timeNow;
       }
         const retentionObj:weeklyRetentionObject = {
           registrationWeek: thisWeek,

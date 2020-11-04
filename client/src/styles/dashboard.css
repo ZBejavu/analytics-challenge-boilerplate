@@ -1,0 +1,112 @@
+
+.dashboard{
+    /* display: flex;
+    flex-direction: row;
+    justify-content: center; */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1.4fr 0.5fr 0.8fr;
+    grid-gap: 20px;
+    grid-template-areas: 
+    "maptile maptile"
+    "daytile weektile"
+    "retentionTile retentionTile"
+    ;
+    height: 200vh;
+    width:90vw;
+    padding: 4%;
+    background-color: #FEFEFE;
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #000;
+}
+.column{
+    height: 100%;
+    width: 100%;
+    padding: 1%;
+}
+.daytile, .weektile, .maptile, .retentionTile{
+    margin: 1%;
+    grid-area: tile;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height:96%;
+    padding: 5%;
+    background-color:rgb(218, 218, 218);
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #000;
+}
+.daytile{
+    grid-area: daytile;
+    background-color: rgb(251, 251, 251);
+}
+.weektile{
+    grid-area: weektile;
+    background-color: rgb(251, 251, 251);
+}
+.maptile{
+    grid-area: maptile;
+    height:100%;
+    margin: 0%;
+}
+.retentionTile{
+    grid-area: retentionTile;
+    max-height: 70vh;
+    margin: 0%;
+    background-color: rgb(255, 253, 250);
+}
+@media(min-width: 2600px) {
+    .dashboard{
+        margin-left: -30vw;
+    }
+}
+/* @media(orientation: landscape) {
+    .dashboard{
+        
+    }
+} */
+@media(max-width: 2600px) and ( min-width:2350px) {
+    .dashboard{
+        margin-left: -28vw;
+    }
+}
+@media(max-width: 2350px) and ( min-width:2150px) {
+    .dashboard{
+        margin-left: -26vw;
+        background-color: blue;
+    }
+}
+@media(max-width: 2150px) and ( min-width:1900px) {
+    .dashboard{
+        margin-left: -23vw;
+        background-color: rgb(41, 41, 41);
+    }
+}
+@media(max-width: 1900px) and ( min-width:1600px) {
+    .dashboard{
+        margin-left: -18vw;
+        background-color: rgb(41, 41, 41);
+    }
+
+}
+
+@media(max-width: 1600px) and ( min-width:200px) {
+    .dashboard{
+        margin-left: 1vw;
+        background-color: rgb(41, 41, 41);
+        height:230vh;
+    }
+    .column{
+        width:90%;
+        height: 50%;
+    }
+    .tile{
+        height: 30%;
+        margin-bottom: 5%;
+    }
+    .maptile{
+        height: 40%;
+    }
+}

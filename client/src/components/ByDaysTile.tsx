@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import axios from "axios";
 import TextField from "@material-ui/core/TextField";
-import { getDateInFormat, FromStringToDayOffset, today } from "./dateHelpers";
+import { getDateInFormat, getOffsetFromString, today } from "./dateHelpers";
 interface daySessions {
   date: string;
   count: number;
@@ -29,7 +29,7 @@ const SessionsByDay = () => {
   }, [offset]);
 
   return (
-        <div style={{ height: "40vh", width: "40vw", display:'flex', flexDirection:'column' }}>
+      <div className='weektile'>
         <TextField
           label="dateStart"
           type="date"
@@ -37,13 +37,13 @@ const SessionsByDay = () => {
           InputProps={{
             inputProps: { min: "2020-06-01", max: getDateInFormat(today) },
           }}
-          onChange={(e) => setOffset(FromStringToDayOffset(e.target.value))}
+          onChange={(e) => setOffset(getOffsetFromString(e.target.value))}
           InputLabelProps={{
             shrink: true,
           }}
         />
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={byDays}>
+          <ResponsiveContainer>
+            <LineChart height={10} data={byDays}>
               <Line type="monotone" dataKey="count" stroke="#8884d8" name="This Week" />
               <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
               <XAxis dataKey="date" />
@@ -51,7 +51,7 @@ const SessionsByDay = () => {
               <Tooltip />
             </LineChart>
           </ResponsiveContainer>
-        </div>
+      </div>
   );
 };
 

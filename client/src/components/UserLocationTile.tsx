@@ -6,8 +6,7 @@ import styled from "styled-components";
 import { Event } from "../models/event";
 import { Loading } from "react-loading-wrapper";
 import CanvasLoading from "./CanvasLoading";
-
-const apiKey = "AIzaSyA1jO5KCUbo5ifKHb4LK5ilBN2Fp0NZb5Y";
+import apiKey from '../secrets';
 const GoogleMapsTile = () => {
   const [map, setMap] = useState<google.maps.Map | undefined>(undefined);
   const [events, setEvents] = useState<Event[] | undefined>(undefined);
@@ -49,19 +48,13 @@ const GoogleMapsTile = () => {
 
   const mapStyle = { height: "100%", width: "100%" };
   return (
-    <>
-      <Resizable
-        defaultSize={{
-          width: "40vw",
-          height: "35vh",
-        }}
-      >
+      <div className='maptile'>
         <Loading loadingComponent={<CanvasLoading />} loading={loading}>
           <Select onChange={(e) => setFilter(e.target.value)}>
+            <option value="" selected disabled hidden>choose an event</option>
             <option value={"signup"}>signup</option>
-            <option value={"admin"}>admin</option>
+            <option value={"pageView"}>pageView</option>
             <option value={"login"}>login</option>
-            <option value={"/"}>/</option>
           </Select>
           <LoadScript googleMapsApiKey={apiKey} loadingElement={CanvasLoading}>
             <GoogleMap
@@ -95,26 +88,29 @@ const GoogleMapsTile = () => {
             </GoogleMap>
           </LoadScript>
         </Loading>
-      </Resizable>
-    </>
+      </div>
   );
 };
 
 export default memo(GoogleMapsTile);
 
 const Select = styled.select`
-  background-color:#b5433f;
+  background-color:#3e58ca;
   color: #000000;
   padding: 12px;
-  width: 20%;
-  height:10%;
-  position: absolute;
-  top:5%;
-  left: 5%;
+  width: 28%;
+  height:11%;
+  position: relative;
+  top:11%;
+  left: 3%;
   border: none;
   z-index: 8;
   font-size: 150%;
   outline: none;
+  background-color:rgb(116, 160, 197);
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 0 10px #444444;
     option {
       &:hover {
         background-color:black;
