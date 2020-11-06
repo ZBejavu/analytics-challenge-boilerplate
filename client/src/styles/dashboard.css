@@ -1,20 +1,20 @@
 
 .dashboard{
-    /* display: flex;
-    flex-direction: row;
-    justify-content: center; */
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1.4fr 0.5fr 0.8fr;
+    grid-template-rows: 1.5fr 1fr 1fr 1fr;
+    /* grid-template-columns: 500px 500px 500px;
+    grid-template-rows: 500px 500px 500px; */
     grid-gap: 20px;
     grid-template-areas: 
     "maptile maptile"
     "daytile weektile"
     "retentionTile retentionTile"
+    "eventTile eventTile"
     ;
-    height: 200vh;
-    width:90vw;
-    padding: 4%;
+    height: 250vh;
+    width:85vw;
+    padding: 8%;
     background-color: #FEFEFE;
     box-sizing: border-box;
     border-radius: 4px;
@@ -25,35 +25,82 @@
     width: 100%;
     padding: 1%;
 }
-.daytile, .weektile, .maptile, .retentionTile{
+.daytile, .weektile, .maptile, .retentionTile, .eventTile{
     margin: 1%;
-    grid-area: tile;
     display: flex;
+    max-height: 60vh;
     flex-direction: column;
     justify-content: center;
     height:96%;
     padding: 5%;
-    background-color:rgb(218, 218, 218);
+    background-color:rgb(251, 251, 251);
     box-sizing: border-box;
     border-radius: 4px;
     box-shadow: 0 0 10px #000;
 }
 .daytile{
     grid-area: daytile;
+    /* grid-row: 2 / 3;
+    grid-column: 1 / 2; */
     background-color: rgb(251, 251, 251);
 }
 .weektile{
     grid-area: weektile;
+    /* grid-row: 2 / 3;
+    grid-column: 2 / 3; */
+    
+    background-color: rgb(251, 251, 251);
+}
+.eventCard{
+    width:35vw;
+    height:5%;
+    margin-bottom: 5px;
+    padding: 1%;
+    background-color:rgb(180, 199, 216);
+    box-sizing: border-box;
+    border-radius: 4px;
+    word-wrap: break-word;
+    box-shadow: 0 0 10px #000;
+  }
+  
+  .eventContent{
+    font-size: 1rem;
+  }
+  .eventContainer{
+    display: flex;
+    flex-direction: column;
+    align-items:  flex-end;
+    justify-content: flex-start;
+    height:100%;
+    width: 100%;
+    max-height: 100%;
+    overflow: 'auto';
+    overflow-y: scroll;
+  }
+  .eventName{
+    font-size: 1rem;
+    font-weight: 500;
+  }
+.eventTile{
+    grid-area: eventTile;
+    /* grid-row: 4 / 5;
+    grid-column: 1 / 3; */
+    justify-content: flex-start;
+    max-height: 60vh;
     background-color: rgb(251, 251, 251);
 }
 .maptile{
+    /* grid-row: 1/2;
+    grid-column: 1 / 3; */
     grid-area: maptile;
-    height:100%;
-    margin: 0%;
+    max-height: 70vh;
 }
 .retentionTile{
     grid-area: retentionTile;
-    max-height: 70vh;
+    /* grid-row: 3 / 4;
+    grid-column: 1 / 3; */
+    z-index: 6;
+    max-height: 60vh;
     margin: 0%;
     background-color: rgb(255, 253, 250);
 }
@@ -62,11 +109,6 @@
         margin-left: -30vw;
     }
 }
-/* @media(orientation: landscape) {
-    .dashboard{
-        
-    }
-} */
 @media(max-width: 2600px) and ( min-width:2350px) {
     .dashboard{
         margin-left: -28vw;
@@ -91,22 +133,132 @@
     }
 
 }
-
-@media(max-width: 1600px) and ( min-width:200px) {
+@media(max-width: 1600px) and ( min-width:1400px) {
     .dashboard{
-        margin-left: 1vw;
-        background-color: rgb(41, 41, 41);
-        height:230vh;
-    }
-    .column{
-        width:90%;
-        height: 50%;
-    }
-    .tile{
-        height: 30%;
-        margin-bottom: 5%;
-    }
-    .maptile{
-        height: 40%;
+        margin-left: -14vw;
     }
 }
+@media(max-width: 1400px) and ( min-width:200px) {
+    .dashboard{
+        margin-left: -14vw;
+        grid-template-rows: 1.2fr 0.8fr 0.8fr 0.6fr;
+        background-color: rgb(41, 41, 41);
+        grid-template-columns: 1fr 1fr;
+        height: 100%;
+        grid-gap: 10px;
+        grid-template-areas:
+        "maptile maptile"
+        "daytile weektile"
+        "retentionTile retentionTile"
+        "eventTile eventTile"
+        ;
+    }
+}
+ @media(max-width: 1400px) and ( min-width:800px) {
+    .maptile select{
+        font-size: 90%;
+        background-color: rgb(111, 167, 204);
+        width: 16%;
+    }
+    .dashboard{
+        margin-left: -10vw;
+    }
+}
+ @media(max-width: 1200px) and ( min-width:780px) {
+    .maptile select{
+        font-size: 90%;
+        background-color: rgb(111, 167, 204);
+        width: 16%;
+    }
+    .dashboard{
+        height:100%;
+        background-color: rgb(111, 167, 204);
+        margin-left: -3vw;
+    }
+}
+ @media(max-width: 780px) and ( min-width:600px) {
+    .maptile select{
+        font-size: 90%;
+        background-color: rgb(111, 167, 204);
+        width: 16%;
+    }
+    .dashboard{
+        height:100%;
+        background-color: rgb(32, 89, 128);
+        margin-left: -4vw;
+    }
+}
+ @media(max-width: 599px) and ( min-width:200px)  {
+    .maptile select{
+        font-size: 90%;
+        background-color: rgb(111, 167, 204);
+        width: 30%;
+    }
+    .maptile h1{
+        font-size: 100%;
+    }
+    .dashboard{
+        height: 100%;
+        background-color: rgb(32, 89, 128);
+        margin-left: 5vw;
+        grid-template-rows: 0.5fr 0.0.5fr 0.5fr 0.5fr 0.5fr;
+        grid-template-areas:
+        "maptile maptile"
+        "daytile daytile"
+        "weektile weektile"
+        "retentionTile retentionTile"
+        "eventTile eventTile"
+        ;
+    }
+}
+.dashboard{
+    background-color: rgb(57, 58, 59);
+}
+/*
+@media(max-width: 800px) and ( min-width:200px) {
+    .dashboard{
+        margin-left: 4vw;
+    }
+    .maptile select{
+        font-size: 70%;
+        width: 16%;
+    }
+}
+@media(orientation: landscape) and (max-height: 500px) and (min-width: 800px) {
+    .dashboard{
+        background-color: chartreuse;
+        margin-left: -3vw;
+        height: 100%;
+    }
+    .maptile select{
+        font-size: 90%;
+        width: 16%;
+    }
+}
+@media(orientation: landscape) and (max-height: 500px) and (min-width: 709px) {
+    .dashboard{
+        background-color: rgb(104, 143, 66);
+        margin-left: -2vw;
+        height: 100%;
+    }
+    .maptile select{
+        font-size: 90%;
+        width: 16%;
+    }
+}
+@media(orientation: landscape) and (max-height: 500px) and (max-width: 359px) {
+    .dashboard{
+        background-color: rgb(104, 143, 66);
+        margin-left: -2vw;
+        height: 100%;
+    }
+    .maptile select{
+        font-size: 90%;
+        width: 16%;
+    }
+}
+@media (max-width: 400px){
+    .maptile h1{
+        font-size: 85%;
+    }
+} */

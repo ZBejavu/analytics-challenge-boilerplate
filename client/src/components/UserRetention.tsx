@@ -8,7 +8,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { getDateInFormat, today } from "./dateHelpers";
 import { Loading } from "react-loading-wrapper";
-import CanvasLoading from "./CanvasLoading";
 import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
 import { TableBody } from "@material-ui/core";
@@ -51,7 +50,7 @@ export default function RetentionTable() {
   return (
     <div className='retentionTile'>
       {retention && (
-        <Loading loading={retention.length === 0 || totalRetention.length === 0} loadingComponent={<CanvasLoading />}>
+        <>
           <TextField
             label="dayZero"
             type="date"
@@ -65,7 +64,7 @@ export default function RetentionTable() {
             }}
           />
           <TableContainer>
-            <Table size="small" style={{ border: "1px solid #b3b3b3" }}>
+            <Table style={{ border: "1px solid #b3b3b3" }}>
               <TableHead>
                 <TableRow style={{ background: "#e2e2e2" }}>
                   <TableCell>Dates</TableCell>
@@ -113,7 +112,7 @@ export default function RetentionTable() {
               </TableBody>
             </Table>
           </TableContainer>
-        </Loading>
+        </>
       )}
     </div>
   );

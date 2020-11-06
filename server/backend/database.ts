@@ -929,10 +929,10 @@ export const getEventByType = (name:eventName, array?:Event[]) => {
 export const getEventByDate = (date:'+date'|'-date', array?:Event[]) => {
   if(array){
     return array.sort((a:Event,b:Event) => {
-      if(date === '+date'){
-        return a.date-b.date;
-      }
+      if(date === '-date'){
         return b.date-a.date;
+      }
+        return a.date-b.date;
     });
   }
   return db.get(EVENT_TABLE).value()

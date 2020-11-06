@@ -1,17 +1,16 @@
 import React, { useState, useCallback, useEffect, memo } from "react";
-import { Resizable } from "re-resizable";
 import { GoogleMap, LoadScript, Marker, InfoWindow, MarkerClusterer } from "@react-google-maps/api";
 import axios from "axios";
 import styled from "styled-components";
 import { Event } from "../models/event";
 import { Loading } from "react-loading-wrapper";
-import CanvasLoading from "./CanvasLoading";
 import apiKey from '../secrets';
 const GoogleMapsTile = () => {
   const [map, setMap] = useState<google.maps.Map | undefined>(undefined);
   const [events, setEvents] = useState<Event[] | undefined>(undefined);
   const [filter, setFilter] = useState<string>("signup");
   const [loading, setLoading] = useState<boolean>(true);
+  const [Zoom, setZoom] = useState<number>(7);
   const [center, setCenter] = useState({
     lat: 31.46667,
     lng: 34.783333,
@@ -19,18 +18,34 @@ const GoogleMapsTile = () => {
 
   const getFilteredMap = useCallback(async () => {
     setLoading(true);
-    const { data: filteredEvents } = await axios.get(
+    const { data } = await axios.get(
       `http://localhost:3001/events/all-filtered?type=${filter}`
     );
-    setEvents(filteredEvents.events);
-    setCenter({
-      lat: 31.46667,
-      lng: 34.783333,
-    })
-    filteredEvents.events[0] && console.log(filteredEvents.events[0].geolocation.location)
-
+    const filteredEvents = data.events
+    setEvents(filteredEvents);
     setLoading(false);
   }, [filter]);
+
+  const rezoomAndCenter = () => {
+    if(!events){
+      return;
+    }
+    let latSum= 0, lngSum = 0;
+    events.forEach((event:Event) =>{
+      latSum+= event.geolocation.location.lat;
+      lngSum += event.geolocation.location.lng;
+    });
+    const middle= {lat: latSum / events.length, lng: lngSum/events.length};
+    console.log('middle', middle)
+    setCenter(middle);
+    setZoom(2.2 + Math.random())
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      rezoomAndCenter();
+    }, 1000);
+  }, [events]);
 
   useEffect(() => {
     getFilteredMap();
@@ -46,20 +61,21 @@ const GoogleMapsTile = () => {
     setMap(map);
   }, []);
 
-  const mapStyle = { height: "100%", width: "100%" };
+  const mapStyle = { height: "inherit", width: "inherit" };
   return (
       <div className='maptile'>
-        <Loading loadingComponent={<CanvasLoading />} loading={loading}>
+        <Loading loading={loading}>
+          <h1 style={{margin:'auto'}}>User Events By Location</h1>
           <Select onChange={(e) => setFilter(e.target.value)}>
             <option value="" selected disabled hidden>choose an event</option>
             <option value={"signup"}>signup</option>
             <option value={"pageView"}>pageView</option>
             <option value={"login"}>login</option>
           </Select>
-          <LoadScript googleMapsApiKey={apiKey} loadingElement={CanvasLoading}>
+          <LoadScript googleMapsApiKey={apiKey} loadingElement={Loading}>
             <GoogleMap
               mapContainerStyle={mapStyle}
-              zoom={0.05}
+              zoom={Zoom}
               onLoad={onLoad}
               onUnmount={onUnmount}
               center={center}
@@ -71,7 +87,7 @@ const GoogleMapsTile = () => {
                 scaleControl: true,
               }}
             >
-              {Array.isArray(events) && (
+              {Array.isArray(events) &&(
                 <MarkerClusterer>
                   {(clusterer) =>
                     events.map((event:Event) => (
@@ -99,9 +115,9 @@ const Select = styled.select`
   color: #000000;
   padding: 12px;
   width: 28%;
-  height:11%;
+  min-height:22px;
   position: relative;
-  top:11%;
+  top:15%;
   left: 3%;
   border: none;
   z-index: 8;

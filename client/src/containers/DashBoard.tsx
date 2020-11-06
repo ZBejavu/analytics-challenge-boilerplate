@@ -2,6 +2,7 @@ import ErrorBoundry from "components/ErrorBoundary";
 import ByDaysTile from "components/ByDaysTile";
 import ByHoursTile from "components/ByHoursTile";
 import UserRetention from "components/UserRetention";
+import EventLog from "components/EventLog";
 import React from "react";
 import UserLocationTile from "components/UserLocationTile";
 import { Interpreter } from "xstate";
@@ -26,6 +27,9 @@ const DashBoard: React.FC = () => {
         </ErrorBoundry>
       <ErrorBoundry>
         <UserRetention />
+      </ErrorBoundry>
+      <ErrorBoundry>
+        <EventLog />
       </ErrorBoundry>
     </div>
   );
