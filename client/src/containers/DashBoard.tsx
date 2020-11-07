@@ -1,10 +1,12 @@
 import ErrorBoundry from "components/ErrorBoundary";
 import ByDaysTile from "components/ByDaysTile";
 import ByHoursTile from "components/ByHoursTile";
+import UserLocationTile from "components/UserLocationTile";
 import UserRetention from "components/UserRetention";
+import PageViewChart from 'components/PageViewChart';
+import ChartByOs from 'components/ChartByOs';
 import EventLog from "components/EventLog";
 import React from "react";
-import UserLocationTile from "components/UserLocationTile";
 import { Interpreter } from "xstate";
 import { AuthMachineContext, AuthMachineEvents } from "../machines/authMachine";
 import '../styles/dashboard.css';
@@ -24,6 +26,12 @@ const DashBoard: React.FC = () => {
         </ErrorBoundry>
         <ErrorBoundry>
           <ByHoursTile />
+        </ErrorBoundry>
+        <ErrorBoundry>
+          <PageViewChart />
+        </ErrorBoundry>
+        <ErrorBoundry>
+          <ChartByOs />
         </ErrorBoundry>
       <ErrorBoundry>
         <UserRetention />

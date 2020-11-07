@@ -899,19 +899,20 @@ export const getEventByBrowser = (browser:browser, array?:Event[]) => {
   }
   return db.get(EVENT_TABLE).value().filter((event : Event) => event.browser === browser)
 }
-export const getEventBySearch = (value:RegExp, array?:any[]) => {
-  let myArray:any[] = getAllEvents();
+
+export const getEventBySearch = (value:RegExp, array?:Event[]) => {
+  let myArray: Event[] = getAllEvents();
   if(array){
     myArray = array;
   }
     const regex:RegExp = new RegExp(value, "i");
-    return myArray.filter((event) => {
-      let found:boolean = false;
-      for(const key in event){
-        if(regex.test(event[key])){
-          found = true;
+    return myArray.filter((event: Event) => {
+      const values = Object.values(event);
+      const found = values.some((value:string | number | Geolocation) => {
+        if(typeof value === 'string' || typeof value === 'number'){
+          return regex.test(value.toString())
         }
-      }
+      })
       return found
     });
 }
@@ -1018,7 +1019,6 @@ export const getUniqueDaySessions = (dateStart:number, dateEnd:number) => {
       }
     }
   })
-  console.log('arrToSend', arrToSend)
   return arrToSend;
 }
 
@@ -1027,7 +1027,6 @@ export const getUniqueWeekSessions = (dateStart:number, dateEnd:number) => {
   let dates:string[] = [];
   const dayInMilliseconds = 1000*60*60*24;
   const eventsInRange = db.get(EVENT_TABLE).value().filter(event => event.date >= dateStart && event.date < dateEnd);
-  console.log('========================================================', eventsInRange.length)
   let prevday:number = 23424;
 
 
@@ -1088,10 +1087,8 @@ export const getUniqueWeekSessions = (dateStart:number, dateEnd:number) => {
       }
     } else {
       sum++;
-      console.log('FUCK MEEEEEEE', structuredDate, event.session_id, sum)
     }
   })
-  console.log('arrToSend', arrToSend)
   return arrToSend;
 
 }
