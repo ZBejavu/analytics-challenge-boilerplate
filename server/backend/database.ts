@@ -182,6 +182,14 @@ export const removeUserFromResults = (userId: User["id"], results: User[]) =>
 export const getUserBy = (key: string, value: any) => getBy(USER_TABLE, key, value);
 export const getUserId = (user: User): string => user.id;
 export const getUserById = (id: string) => getUserBy("id", id);
+export const getUserByuuId = (uuid: string) => {
+ const user:User|undefined = getUserBy("id", uuid);
+  if(user){
+    return user.firstName.concat(` ${user.lastName}`);
+  }else{
+    return 'undefined';
+  }
+};
 export const getUserByUsername = (username: string) => getUserBy("username", username);
 
 export const createUser = (userDetails: Partial<User>): User => {

@@ -5,10 +5,22 @@ import {InputLabel, Select, MenuItem, TextField} from '@material-ui/core'
 import {getDateInFormat} from './dateHelpers';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Loading } from "react-loading-wrapper";
+import Accordion from '@material-ui/core/Accordion';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import PageviewIcon from '@material-ui/icons/Pageview';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Typography from '@material-ui/core/Typography';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 type sorting = '+date' | '-date';
+interface LogEvent extends Event {
+    userName?: string
+}
 const EventLog = () => {
-    const [filteredEvents, setFilteredEvents] = useState<Event[]>();
-    const [offset, setOffset] = useState<number>(0);
+    const [filteredEvents, setFilteredEvents] = useState<LogEvent[]>();
+    const [offset, setOffset] = useState<number>(20);
     const [more, setMore] = useState<boolean>(true);
     const [browserFilter, setBrowserFilter] = useState<browser | undefined>();
     const [typeFilter, setTypeFilter] = useState<eventName | undefined>();
@@ -27,6 +39,15 @@ const EventLog = () => {
         }
         const {data} = await axios.get(`http://localhost:3001/events/all-filtered?${searchQuery}&&offset=${offset+10}`);
         const filteredEvents:Event[] = data.events;
+/*         Promise.all(filteredEvents.map(async (event:Event) => {
+            const {data} = await axios.get(`http://localhost:3001/events/userNameByuuid/${event.distinct_user_id}`)
+            const userName:string = data;
+            return {...event , userName }
+        })).then((values:LogEvent[]) => {
+            setFilteredEvents(values);
+        }) */
+        // a cool feature potentially but has very very poor performance
+
         const hasMore:boolean = data.more;
         setOffset(offset+ 10)
         setMore(hasMore);
@@ -45,63 +66,63 @@ const EventLog = () => {
         <div className='eventTile'>
             <div className='logFilters'>
 
-            <TextField id="standard-basic" label="Standard" onChange={(e)=> setSearchRegex(e.target.value as RegExp | string | undefined)}/>
-            {/* sort by date -----------------------------------*/}
+                <TextField id="standard-basic" label="Standard" onChange={(e)=> setSearchRegex(e.target.value as RegExp | string | undefined)}/>
+                {/* sort by date -----------------------------------*/}
 
-            <InputLabel shrink id="sortSelect">Sort</InputLabel>
-            <Select
-            labelId="sortSelect"
-            id="sort"
-            value={sortFilters}
-            placeholder={sortFilters}
-            onChange={(e) => {
-                setSortFilters(e.target.value as sorting)
-            }}
-            displayEmpty
-            >
-                <MenuItem value="+date"><em>+Date</em></MenuItem>
-                <MenuItem value="-date"><em>-Date</em></MenuItem>
-            </Select>
+                <InputLabel shrink id="sortSelect">Sort</InputLabel>
+                <Select
+                labelId="sortSelect"
+                id="sort"
+                value={sortFilters}
+                placeholder={sortFilters}
+                onChange={(e) => {
+                    setSortFilters(e.target.value as sorting)
+                }}
+                displayEmpty
+                >
+                    <MenuItem value="+date"><em>+Date</em></MenuItem>
+                    <MenuItem value="-date"><em>-Date</em></MenuItem>
+                </Select>
 
-            {/* filter by type -----------------------------------*/}
+                {/* filter by type -----------------------------------*/}
 
-            <InputLabel shrink id="typeFilter">Type</InputLabel>
-            <Select
-            labelId="typeFilter"
-            id="type"
-            value={typeFilter}
-            onChange={(e) => {
-                setTypeFilter(e.target.value as eventName | undefined)
-            }}
-            displayEmpty
-            >
-                <MenuItem value=""><em>None</em></MenuItem>
-                <MenuItem value={"login"}>Login</MenuItem>
-                <MenuItem value={"signup"}>Signup</MenuItem>
-                <MenuItem value={"pageView"}>Page View</MenuItem>
-            </Select>
-            
-            {/* filter by browser -----------------------------------*/}
+                <InputLabel shrink id="typeFilter">Type</InputLabel>
+                <Select
+                labelId="typeFilter"
+                id="type"
+                value={typeFilter}
+                onChange={(e) => {
+                    setTypeFilter(e.target.value as eventName | undefined)
+                }}
+                displayEmpty
+                >
+                    <MenuItem value=""><em>None</em></MenuItem>
+                    <MenuItem value={"login"}>Login</MenuItem>
+                    <MenuItem value={"signup"}>Signup</MenuItem>
+                    <MenuItem value={"pageView"}>Page View</MenuItem>
+                </Select>
+                
+                {/* filter by browser -----------------------------------*/}
 
-            <InputLabel shrink id="browserFilter">Browser</InputLabel>
-            <Select
-            labelId="browserFilter"
-            id="browser"
-            value={browserFilter}
-            onChange={(e) => {
-                setBrowserFilter(e.target.value as browser | undefined)
-            }}
-            displayEmpty
-            // className={classes.selectEmpty}
-            >
-                <MenuItem value=""><em>None</em></MenuItem>
-                <MenuItem value={"chrome"}>Chrome</MenuItem>
-                <MenuItem value={"safari"}>Safari</MenuItem>
-                <MenuItem value={"edge"}>Edge</MenuItem>
-                <MenuItem value={"firefox"}>FireFox</MenuItem>
-                <MenuItem value={"ie"}>IE</MenuItem>
-                <MenuItem value={"other"}>other</MenuItem>
-            </Select>
+                <InputLabel shrink id="browserFilter">Browser</InputLabel>
+                <Select
+                labelId="browserFilter"
+                id="browser"
+                value={browserFilter}
+                onChange={(e) => {
+                    setBrowserFilter(e.target.value as browser | undefined)
+                }}
+                displayEmpty
+                // className={classes.selectEmpty}
+                >
+                    <MenuItem value=""><em>None</em></MenuItem>
+                    <MenuItem value={"chrome"}>Chrome</MenuItem>
+                    <MenuItem value={"safari"}>Safari</MenuItem>
+                    <MenuItem value={"edge"}>Edge</MenuItem>
+                    <MenuItem value={"firefox"}>FireFox</MenuItem>
+                    <MenuItem value={"ie"}>IE</MenuItem>
+                    <MenuItem value={"other"}>other</MenuItem>
+                </Select>
 
             </div>
             <div id="scrollableDiv" className="eventContainer">
@@ -115,26 +136,42 @@ const EventLog = () => {
             loader={<Loading loading={true}/>}
             endMessage={
                 <p style={{ textAlign: 'center' }}>
-                <b>Yay! You have seen it all</b>
+                <b>End of the line :)</b>
                 </p>
             }>
                 {
-                    filteredEvents?.map((event:Event) => {
-                    return     <div className='eventCard'
-                    style={{ backgroundColor: 'background-color:rgb(247, 247, 247)' }}
-                  >
-                    <div id={event.name} className="eventName">{`type: ${event.name} user: ${event.distinct_user_id}`}</div>
-                    <div className="eventContent">{`date: ${getDateInFormat(event.date)}, browser: ${event.browser}, os: ${event.os}`}</div>
-                  </div>
+                    filteredEvents?.map((event:LogEvent) => {
+                    return <Accordion key={event._id} style={{width:'40vw'}}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography>
+                          {
+                              event.name === 'login' ?
+                            <AccountCircleIcon />:
+                            event.name === 'signup' ?
+                            <PersonAddIcon /> :
+                            event.name === 'pageView' ?
+                            <PageviewIcon />:
+                            <SupervisorAccountIcon />
+                          }
+                          <b>{`   ${event.name}`}</b></Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography>
+                            Date : {getDateInFormat(event.date)}<br/>
+                            Os : {event.os}<br/>
+                            Browser : {event.browser}
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>    
                     })
                 }
             </InfiniteScroll>
             }
             </div>
-            {/* <h1 style={{margin:'auto'}}>Log Of All Events</h1> */}
-            {/* <div className="eventContainer">
-
-            </div> */}
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { Tooltip, ResponsiveContainer, PieChart, Pie, Legend, Cell } from "recharts";
 import styled from "styled-components";
 import axios from "axios";
 import { Loading } from "react-loading-wrapper";
@@ -9,7 +9,7 @@ interface OperatingSystem {
   count: number;
   color: string;
 }
-const COLORS = ["#fe0087", "#6c00b4","#fe0000", "#ffee00", "#FF8042", "#44f50e"];
+const COLORS = ["#b60000", "red", "orange", "#516ce4", "blue", "darkblue"];
 const ChartByOs = () => {
   const [osEvents, setOsEvents] = useState<OperatingSystem[] | undefined>(undefined);
   const [osEventsWeek, setOsEventsWeek] = useState<OperatingSystem[] | undefined>(undefined);
@@ -55,10 +55,16 @@ const ChartByOs = () => {
 
   return (
     <div className='osTile'>
-      <h1>Operating System Percentage</h1>
+      <div className='divTitle'>Operating System Percentage</div>
         <Loading loading={!osEvents || !osEventsToday || !osEventsWeek}>
+        <div style={{display:'flex', width: '100%'}}>
+          {osEvents && osEvents.length>0 &&<div style={{width:'33%'}}>time: All</div>}
+          {osEventsWeek&& osEventsWeek.length > 0 &&<div style={{width:'33%'}}>time: Week</div>}
+          {osEventsToday && osEventsToday.length > 0&&<div style={{width:'33%'}}>time: Today</div>}
+        </div>
+        
         <div className='osChartContainer'>
-          <ResponsiveContainer width="33%" height="100%">
+          <ResponsiveContainer width="40%" height="100%">
             <PieChart>
               <Pie
                 data={osEvents}
@@ -66,36 +72,44 @@ const ChartByOs = () => {
                 nameKey="os"
                 cx="50%"
                 cy="50%"
-                outerRadius={40}
+                outerRadius='60%'
                 label
                 fill="#8884d8"
               >
+
                 {osEvents?.map((os, index) => (
                   <Cell key={index} fill={COLORS[index]} />
                 ))}
               </Pie>
+              <Legend
+                height={10}
+                verticalAlign="bottom"
+              />
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>
-          <ResponsiveContainer width="33%" height="100%">
-            <PieChart>
-              <Pie
-                data={osEventsToday}
-                dataKey="count"
-                nameKey="os"
-                cx="50%"
-                cy="50%"
-                outerRadius={50}
-                label
-                fill="#8884d8"
-              >
-                {osEventsToday?.map((os, index) => (
-                  <Cell key={index} fill={COLORS[index]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+          {osEventsToday?.length === 0? <div className='divTitle'>No Events Today</div>:
+            <ResponsiveContainer width="33%" height="100%">
+              <PieChart>
+                <Pie
+                  data={osEventsToday}
+                  dataKey="count"
+                  nameKey="os"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={50}
+                  label
+                  fill="#8884d8"
+                >
+                  {osEventsToday?.map((os, index) => (
+                    <Cell key={index} fill={COLORS[index]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          }
+          {osEventsToday?.length === 0? <div className='divTitle'>No Events this Week</div>:
           <ResponsiveContainer width="33%" height="100%">
             <PieChart>
               <Pie
@@ -115,6 +129,7 @@ const ChartByOs = () => {
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>
+          }
         </div>
         </Loading>
     </div>

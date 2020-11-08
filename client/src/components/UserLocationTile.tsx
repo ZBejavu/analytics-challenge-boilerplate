@@ -44,7 +44,7 @@ const GoogleMapsTile = () => {
   useEffect(() => {
     setTimeout(() => {
       rezoomAndCenter();
-    }, 1000);
+    }, 2000);
   }, [events]);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ const GoogleMapsTile = () => {
   return (
       <div className='maptile'>
         <Loading loading={loading}>
-          <h1 style={{margin:'auto'}}>User Events By Location</h1>
+        <div className='divTitle'>User Events by Location</div>
           <Select onChange={(e) => setFilter(e.target.value)}>
             <option value="" selected disabled hidden>choose an event</option>
             <option value={"signup"}>signup</option>

@@ -32,6 +32,7 @@ const SessionsByHours = () => {
 
   return (
     <div className='daytile'>
+        <div className='divTitle'>sessions by hours</div>
         <TextField
           label="dateStart"
           type="date"

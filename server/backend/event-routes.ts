@@ -17,6 +17,7 @@ import {
   getEventByDate,
   getStartOfDay,
   getDateInFormat,
+  getUserByuuId,
   getWeekFromNow,
   getDateInFullFormat
 } from "./database";
@@ -261,6 +262,15 @@ router.get('/chart/os/:time',(req: Request, res: Response) => {
   }else{
     return res.sendStatus(404).send('bad request');
   }
+})
+
+router.get('/userNameByuuid/:uuid',(req: Request, res: Response) => {
+  const {uuid} = req.params;
+  if(!uuid){
+    return res.status(400).json({message: 'please include uuid in request params'})
+  }
+  const username:string = getUserByuuId(uuid)
+  return res.send(username);
 })
   
 router.get('/chart/pageview/:time',(req: Request, res: Response) => {

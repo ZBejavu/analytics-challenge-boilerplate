@@ -30,6 +30,7 @@ const SessionsByDay = () => {
 
   return (
       <div className='weektile'>
+      <div className='divTitle'>sessions by days</div>
         <TextField
           label="dateStart"
           type="date"

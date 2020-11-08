@@ -49,7 +49,7 @@ const PageViewChart = () => {
   }, []);
   return (
     <div className='pageViewTile'>
-    <h1>Views Per Page</h1>
+        <div className='divTitle'>Views per Page</div>
         <Loading loading={!pages}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={pages}>

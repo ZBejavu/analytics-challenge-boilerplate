@@ -49,6 +49,7 @@ export default function RetentionTable() {
 
   return (
     <div className='retentionTile'>
+      <div className='divTitle'>user retention cohort</div>
       {retention && (
         <>
           <TextField
