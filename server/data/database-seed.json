@@ -17865,7 +17865,20 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 46533,
       "createdAt": "2020-10-06T13:15:13.053Z",
-      "modifiedAt": "2020-10-29T14:35:33.617Z"
+      "modifiedAt": "2020-10-29T14:35:33.617Z",
+      "privileges": []
+    },
+    {
+      "id": "lji48qVE5",
+      "uuid": "1f236a56-34df-4d5b-9d80-dfe353c24dbb",
+      "firstName": "Admin",
+      "lastName": "Power",
+      "username": "admin123",
+      "password": "$2a$10$i7IQcv131YzO36cgPE6niOj8L3y79fTl9JdlzGyiN/wXux0AX75A.",
+      "balance": 0,
+      "createdAt": "2020-11-17T11:17:41.160Z",
+      "modifiedAt": "2020-11-17T11:17:41.160Z",
+      "privileges": ["admin"]
     },
     {
       "id": "ILMcLjORs9",
@@ -17880,7 +17893,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 60341,
       "createdAt": "2020-10-03T09:36:20.742Z",
-      "modifiedAt": "2020-10-29T18:28:23.748Z"
+      "modifiedAt": "2020-10-29T18:28:23.748Z",
+      "privileges": []
     },
     {
       "id": "RZTx223nP2",
@@ -17895,7 +17909,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 51853,
       "createdAt": "2020-10-26T08:07:12.302Z",
-      "modifiedAt": "2020-10-29T08:11:14.009Z"
+      "modifiedAt": "2020-10-29T08:11:14.009Z",
+      "privileges": []
     },
     {
       "id": "2AGKKRn_nR",
@@ -17910,7 +17925,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 87534,
       "createdAt": "2020-10-22T08:30:06.760Z",
-      "modifiedAt": "2020-10-29T05:45:30.235Z"
+      "modifiedAt": "2020-10-29T05:45:30.235Z",
+      "privileges": []
     },
     {
       "id": "pTrzVP8ZkY",
@@ -17925,7 +17941,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 142625,
       "createdAt": "2020-10-27T10:27:45.208Z",
-      "modifiedAt": "2020-10-29T11:24:36.994Z"
+      "modifiedAt": "2020-10-29T11:24:36.994Z",
+      "privileges": []
     },
     {
       "id": "udXKoWCIpO",
@@ -17940,7 +17957,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 80221,
       "createdAt": "2020-10-21T02:23:36.796Z",
-      "modifiedAt": "2020-10-29T18:51:37.684Z"
+      "modifiedAt": "2020-10-29T18:51:37.684Z",
+      "privileges": []
     },
     {
       "id": "wm0K91Gery",
@@ -17955,7 +17973,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 193995,
       "createdAt": "2020-10-23T19:32:05.311Z",
-      "modifiedAt": "2020-10-29T18:47:15.093Z"
+      "modifiedAt": "2020-10-29T18:47:15.093Z",
+      "privileges": []
     },
     {
       "id": "CB_00Nz1dY",
@@ -17970,7 +17989,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 20339,
       "createdAt": "2020-10-09T17:42:09.801Z",
-      "modifiedAt": "2020-10-29T00:45:48.898Z"
+      "modifiedAt": "2020-10-29T00:45:48.898Z",
+      "privileges": []
     },
     {
       "id": "ePS6wu8aI_",
@@ -17985,7 +18005,8 @@
       "defaultPrivacyLevel": "public",
       "balance": 76410,
       "createdAt": "2020-10-04T17:22:58.566Z",
-      "modifiedAt": "2020-10-29T21:40:31.045Z"
+      "modifiedAt": "2020-10-29T21:40:31.045Z",
+      "privileges": []
     },
     {
       "id": "NvNTlbTcbW",
@@ -18000,7 +18021,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 154204,
       "createdAt": "2020-10-25T08:21:35.913Z",
-      "modifiedAt": "2020-10-29T16:23:22.049Z"
+      "modifiedAt": "2020-10-29T16:23:22.049Z",
+      "privileges": []
     },
     {
       "id": "K2sFAxPfHX",
@@ -18015,7 +18037,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 151436,
       "createdAt": "2020-10-09T22:31:46.647Z",
-      "modifiedAt": "2020-10-29T11:10:07.482Z"
+      "modifiedAt": "2020-10-29T11:10:07.482Z",
+      "privileges": []
     },
     {
       "id": "pHO9i3B_D7",
@@ -18030,7 +18053,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 69382,
       "createdAt": "2020-10-14T12:52:18.755Z",
-      "modifiedAt": "2020-10-29T14:49:34.499Z"
+      "modifiedAt": "2020-10-29T14:49:34.499Z",
+      "privileges": []
     },
     {
       "id": "AAm5AnvTg4",
@@ -18045,7 +18069,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 148405,
       "createdAt": "2020-10-18T14:26:45.580Z",
-      "modifiedAt": "2020-10-29T07:54:19.798Z"
+      "modifiedAt": "2020-10-29T07:54:19.798Z",
+      "privileges": []
     },
     {
       "id": "3kXnsi8L8l",
@@ -18060,7 +18085,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 137702,
       "createdAt": "2020-10-12T08:02:20.966Z",
-      "modifiedAt": "2020-10-29T04:25:40.349Z"
+      "modifiedAt": "2020-10-29T04:25:40.349Z",
+      "privileges": []
     },
     {
       "id": "oe2ZUVeLOl",
@@ -18075,7 +18101,8 @@
       "defaultPrivacyLevel": "public",
       "balance": 107935,
       "createdAt": "2020-10-09T20:03:10.461Z",
-      "modifiedAt": "2020-10-29T03:48:33.789Z"
+      "modifiedAt": "2020-10-29T03:48:33.789Z",
+      "privileges": []
     },
     {
       "id": "ZX_J_GX9-F",
@@ -18090,7 +18117,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 82898,
       "createdAt": "2020-10-18T03:15:35.458Z",
-      "modifiedAt": "2020-10-29T11:09:37.052Z"
+      "modifiedAt": "2020-10-29T11:09:37.052Z",
+      "privileges": []
     },
     {
       "id": "FLl_1kqIJzl",
@@ -18105,7 +18133,8 @@
       "defaultPrivacyLevel": "public",
       "balance": 168317,
       "createdAt": "2020-10-29T01:48:28.475Z",
-      "modifiedAt": "2020-10-29T02:57:19.859Z"
+      "modifiedAt": "2020-10-29T02:57:19.859Z",
+      "privileges": []
     },
     {
       "id": "d3te8drr_Ow",
@@ -18120,7 +18149,8 @@
       "defaultPrivacyLevel": "public",
       "balance": 144024,
       "createdAt": "2020-10-26T16:30:37.025Z",
-      "modifiedAt": "2020-10-29T04:02:57.161Z"
+      "modifiedAt": "2020-10-29T04:02:57.161Z",
+      "privileges": []
     },
     {
       "id": "8Y8bczCHtU4",
@@ -18135,7 +18165,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 14240,
       "createdAt": "2020-10-27T22:56:24.289Z",
-      "modifiedAt": "2020-10-29T08:48:18.598Z"
+      "modifiedAt": "2020-10-29T08:48:18.598Z",
+      "privileges": []
     },
     {
       "id": "0E26xZZPwWP",
@@ -18150,7 +18181,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 60706,
       "createdAt": "2020-10-03T17:13:14.692Z",
-      "modifiedAt": "2020-10-29T06:04:38.956Z"
+      "modifiedAt": "2020-10-29T06:04:38.956Z",
+      "privileges": []
     },
     {
       "id": "KKXgtGseA9H",
@@ -18165,7 +18197,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 115032,
       "createdAt": "2020-10-08T00:26:09.384Z",
-      "modifiedAt": "2020-10-29T12:29:08.196Z"
+      "modifiedAt": "2020-10-29T12:29:08.196Z",
+      "privileges": []
     },
     {
       "id": "_Y5iZOu_xKw",
@@ -18180,7 +18213,8 @@
       "defaultPrivacyLevel": "public",
       "balance": 152563,
       "createdAt": "2020-10-02T06:25:35.250Z",
-      "modifiedAt": "2020-10-29T07:34:54.762Z"
+      "modifiedAt": "2020-10-29T07:34:54.762Z",
+      "privileges": []
     },
     {
       "id": "CQNkarMIVAU",
@@ -18195,7 +18229,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 195829,
       "createdAt": "2020-10-04T21:49:17.627Z",
-      "modifiedAt": "2020-10-29T10:30:06.113Z"
+      "modifiedAt": "2020-10-29T10:30:06.113Z",
+      "privileges": []
     },
     {
       "id": "tTkBxRs9SG9",
@@ -18210,7 +18245,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 22405,
       "createdAt": "2020-10-12T11:04:15.359Z",
-      "modifiedAt": "2020-10-29T20:32:44.442Z"
+      "modifiedAt": "2020-10-29T20:32:44.442Z",
+      "privileges": []
     },
     {
       "id": "00uLcCfdwge",
@@ -18225,7 +18261,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 100127,
       "createdAt": "2020-10-05T22:53:40.179Z",
-      "modifiedAt": "2020-10-29T03:33:41.656Z"
+      "modifiedAt": "2020-10-29T03:33:41.656Z",
+      "privileges": []
     },
     {
       "id": "PgkHXZDLB0U",
@@ -18240,7 +18277,8 @@
       "defaultPrivacyLevel": "public",
       "balance": 92696,
       "createdAt": "2020-10-10T16:42:05.512Z",
-      "modifiedAt": "2020-10-29T01:04:32.496Z"
+      "modifiedAt": "2020-10-29T01:04:32.496Z",
+      "privileges": []
     },
     {
       "id": "ngGN-86T5BV",
@@ -18255,7 +18293,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 77070,
       "createdAt": "2020-10-09T09:33:08.662Z",
-      "modifiedAt": "2020-10-29T12:05:23.990Z"
+      "modifiedAt": "2020-10-29T12:05:23.990Z",
+      "privileges": []
     },
     {
       "id": "UZuP-kQYLfR",
@@ -18270,7 +18309,8 @@
       "defaultPrivacyLevel": "public",
       "balance": 114649,
       "createdAt": "2020-10-28T16:55:34.252Z",
-      "modifiedAt": "2020-10-29T10:30:58.563Z"
+      "modifiedAt": "2020-10-29T10:30:58.563Z",
+      "privileges": []
     },
     {
       "id": "RUpCina2dDP",
@@ -18285,7 +18325,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 112475,
       "createdAt": "2020-10-17T11:33:48.545Z",
-      "modifiedAt": "2020-10-29T02:50:39.856Z"
+      "modifiedAt": "2020-10-29T02:50:39.856Z",
+      "privileges": []
     },
     {
       "id": "iCinootjgc2",
@@ -18300,7 +18341,8 @@
       "defaultPrivacyLevel": "public",
       "balance": 173535,
       "createdAt": "2020-10-12T00:39:14.205Z",
-      "modifiedAt": "2020-10-29T10:54:11.475Z"
+      "modifiedAt": "2020-10-29T10:54:11.475Z",
+      "privileges": []
     },
     {
       "id": "LWaZdb4OJC2",
@@ -18315,7 +18357,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 137900,
       "createdAt": "2020-10-15T05:33:11.688Z",
-      "modifiedAt": "2020-10-29T16:42:01.070Z"
+      "modifiedAt": "2020-10-29T16:42:01.070Z",
+      "privileges": []
     },
     {
       "id": "NT76w4ENA0c",
@@ -18330,7 +18373,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 154091,
       "createdAt": "2020-10-04T13:32:35.575Z",
-      "modifiedAt": "2020-10-29T10:36:57.458Z"
+      "modifiedAt": "2020-10-29T10:36:57.458Z",
+      "privileges": []
     },
     {
       "id": "YCVeKqEjd72",
@@ -18345,7 +18389,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 15554,
       "createdAt": "2020-10-14T10:06:44.361Z",
-      "modifiedAt": "2020-10-29T14:35:44.021Z"
+      "modifiedAt": "2020-10-29T14:35:44.021Z",
+      "privileges": []
     },
     {
       "id": "Ax1C8ApQLJ8",
@@ -18360,7 +18405,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 126291,
       "createdAt": "2020-10-18T21:42:09.436Z",
-      "modifiedAt": "2020-10-29T04:44:32.761Z"
+      "modifiedAt": "2020-10-29T04:44:32.761Z",
+      "privileges": []
     },
     {
       "id": "OHoM5Gcd6-9",
@@ -18375,7 +18421,8 @@
       "defaultPrivacyLevel": "public",
       "balance": 104163,
       "createdAt": "2020-10-28T04:45:05.665Z",
-      "modifiedAt": "2020-10-29T19:32:38.748Z"
+      "modifiedAt": "2020-10-29T19:32:38.748Z",
+      "privileges": []
     },
     {
       "id": "Y4P4_LEiwi7",
@@ -18390,7 +18437,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 30149,
       "createdAt": "2020-10-25T10:47:43.645Z",
-      "modifiedAt": "2020-10-29T06:03:06.940Z"
+      "modifiedAt": "2020-10-29T06:03:06.940Z",
+      "privileges": []
     },
     {
       "id": "Kmn3aUS3TFq",
@@ -18405,7 +18453,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 183578,
       "createdAt": "2020-10-08T17:41:49.105Z",
-      "modifiedAt": "2020-10-28T23:15:50.932Z"
+      "modifiedAt": "2020-10-28T23:15:50.932Z",
+      "privileges": []
     },
     {
       "id": "qT6C8fS-Gda",
@@ -18420,7 +18469,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 63563,
       "createdAt": "2020-10-29T19:23:17.445Z",
-      "modifiedAt": "2020-10-29T05:06:21.458Z"
+      "modifiedAt": "2020-10-29T05:06:21.458Z",
+      "privileges": []
     },
     {
       "id": "Up3C7ZTBWYn",
@@ -18435,7 +18485,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 83725,
       "createdAt": "2020-10-13T17:21:26.832Z",
-      "modifiedAt": "2020-10-29T09:17:17.600Z"
+      "modifiedAt": "2020-10-29T09:17:17.600Z",
+      "privileges": []
     },
     {
       "id": "YpPi456bIzR",
@@ -18450,7 +18501,8 @@
       "defaultPrivacyLevel": "public",
       "balance": 74857,
       "createdAt": "2020-10-10T03:24:11.476Z",
-      "modifiedAt": "2020-10-29T01:30:03.294Z"
+      "modifiedAt": "2020-10-29T01:30:03.294Z",
+      "privileges": []
     },
     {
       "id": "c7H8QoZQu9K",
@@ -18465,7 +18517,8 @@
       "defaultPrivacyLevel": "public",
       "balance": 112656,
       "createdAt": "2020-10-28T18:58:10.092Z",
-      "modifiedAt": "2020-10-29T11:19:45.694Z"
+      "modifiedAt": "2020-10-29T11:19:45.694Z",
+      "privileges": []
     },
     {
       "id": "Hskk0Joutr0",
@@ -18480,7 +18533,8 @@
       "defaultPrivacyLevel": "public",
       "balance": 162173,
       "createdAt": "2020-10-10T16:39:21.652Z",
-      "modifiedAt": "2020-10-29T04:58:31.490Z"
+      "modifiedAt": "2020-10-29T04:58:31.490Z",
+      "privileges": []
     },
     {
       "id": "l-rJ12ZDtFn",
@@ -18495,7 +18549,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 106726,
       "createdAt": "2020-10-15T16:58:07.280Z",
-      "modifiedAt": "2020-10-29T07:41:32.906Z"
+      "modifiedAt": "2020-10-29T07:41:32.906Z",
+      "privileges": []
     },
     {
       "id": "FtiJty1I9mn",
@@ -18510,7 +18565,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 143920,
       "createdAt": "2020-10-29T15:52:13.200Z",
-      "modifiedAt": "2020-10-29T00:59:08.743Z"
+      "modifiedAt": "2020-10-29T00:59:08.743Z",
+      "privileges": []
     },
     {
       "id": "bo42ndbEgCz",
@@ -18525,7 +18581,8 @@
       "defaultPrivacyLevel": "contacts",
       "balance": 109250,
       "createdAt": "2020-10-09T15:40:14.412Z",
-      "modifiedAt": "2020-10-29T07:27:06.536Z"
+      "modifiedAt": "2020-10-29T07:27:06.536Z",
+      "privileges": []
     },
     {
       "id": "0YleeH7nZH7",
@@ -18540,7 +18597,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 42425,
       "createdAt": "2020-10-19T21:52:33.657Z",
-      "modifiedAt": "2020-10-29T07:31:46.461Z"
+      "modifiedAt": "2020-10-29T07:31:46.461Z",
+      "privileges": []
     },
     {
       "id": "ChSkQTSe46K",
@@ -18555,7 +18613,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 87886,
       "createdAt": "2020-10-10T08:18:20.724Z",
-      "modifiedAt": "2020-10-29T19:25:29.368Z"
+      "modifiedAt": "2020-10-29T19:25:29.368Z",
+      "privileges": []
     },
     {
       "id": "QWQQoz539lO",
@@ -18570,7 +18629,8 @@
       "defaultPrivacyLevel": "public",
       "balance": 130610,
       "createdAt": "2020-10-21T02:37:17.740Z",
-      "modifiedAt": "2020-10-29T09:19:21.780Z"
+      "modifiedAt": "2020-10-29T09:19:21.780Z",
+      "privileges": []
     },
     {
       "id": "-lby-Y8YqJ5",
@@ -18585,7 +18645,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 82426,
       "createdAt": "2020-10-11T04:16:16.060Z",
-      "modifiedAt": "2020-10-28T23:08:08.671Z"
+      "modifiedAt": "2020-10-28T23:08:08.671Z",
+      "privileges": []
     },
     {
       "id": "qDzi8Et4rgS",
@@ -18600,7 +18661,8 @@
       "defaultPrivacyLevel": "private",
       "balance": 75609,
       "createdAt": "2020-10-01T09:13:42.678Z",
-      "modifiedAt": "2020-10-29T19:34:28.576Z"
+      "modifiedAt": "2020-10-29T19:34:28.576Z",
+      "privileges": []
     }
   ],
   "contacts": [
@@ -19816,6 +19878,17 @@
       "isDeleted": false,
       "createdAt": "2020-01-17T23:10:36.176Z",
       "modifiedAt": "2020-10-29T20:59:21.571Z"
+    },
+    {
+      "id": "C21AyGJNh",
+      "uuid": "522fecbe-e512-417a-a71a-305cdd5eb5a5",
+      "userId": "lji48qVE5",
+      "bankName": "123412341234",
+      "accountNumber": "123232122",
+      "routingNumber": "123323232",
+      "isDeleted": false,
+      "createdAt": "2020-11-17T11:17:57.019Z",
+      "modifiedAt": "2020-11-17T11:17:57.019Z"
     },
     {
       "id": "UInC8eCBq_1c",

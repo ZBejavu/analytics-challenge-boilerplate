@@ -69,6 +69,7 @@ describe("Transaction Utils", () => {
         balance: faker.random.number(),
         createdAt: faker.date.past(),
         modifiedAt: faker.date.recent(),
+        privileges: []
       };
 
       const transactionWithLikes: TransactionResponseItem = {

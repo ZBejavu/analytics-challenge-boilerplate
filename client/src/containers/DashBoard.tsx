@@ -15,7 +15,7 @@ export interface Props {
   authService: Interpreter<AuthMachineContext, any, AuthMachineEvents, any>;
 }
 
-const DashBoard: React.FC = () => {
+const DashBoard: React.FC<Props> = ({authService}) => {
   return (
     <div className='dashboard'>
       <ErrorBoundry>

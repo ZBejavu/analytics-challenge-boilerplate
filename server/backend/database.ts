@@ -208,6 +208,7 @@ export const createUser = (userDetails: Partial<User>): User => {
     defaultPrivacyLevel: userDetails.defaultPrivacyLevel!,
     createdAt: new Date(),
     modifiedAt: new Date(),
+    privileges: []
   };
 
   saveUser(user);

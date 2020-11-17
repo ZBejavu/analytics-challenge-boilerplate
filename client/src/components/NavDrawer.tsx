@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
+import ShowChartIcon from '@material-ui/icons/ShowChart';
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -20,12 +21,13 @@ import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import { Grid, Avatar, Typography } from "@material-ui/core";
 import { formatAmount } from "../utils/transactionUtils";
 import { AuthMachineContext, AuthMachineEvents } from "../machines/authMachine";
-
+import { User } from '../models';
 const drawerWidth = 240;
 
 export const mainListItems = (
   toggleDrawer: ((event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void) | undefined,
-  showTemporaryDrawer: Boolean
+  showTemporaryDrawer: Boolean,
+  currentUser: User
 ) => (
   <div>
     <ListItem
@@ -80,6 +82,21 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Notifications" />
     </ListItem>
+    {(currentUser.privileges.includes('admin') ) &&
+    <ListItem
+      button
+      // @ts-ignore
+      onClick={() => showTemporaryDrawer && toggleDrawer()}
+      component={RouterLink}
+      to="/analytics"  //todo: handle
+      data-test="sidenav-bankaccounts" //todo: handle
+    >
+      <ListItemIcon>
+        <ShowChartIcon />
+      </ListItemIcon>
+      <ListItemText primary="Analytics Dashboard" />
+    </ListItem>
+    }
   </div>
 );
 
@@ -249,9 +266,11 @@ const NavDrawer: React.FC<Props> = ({
         <Grid item>
           <Divider />
         </Grid>
-        <Grid item>
-          <List>{mainListItems(toggleDrawer, showTemporaryDrawer)}</List>
-        </Grid>
+        {currentUser &&
+          <Grid item>
+            <List>{mainListItems(toggleDrawer, showTemporaryDrawer, currentUser)}</List>
+          </Grid>
+        }
         <Grid item>
           <Divider />
         </Grid>
