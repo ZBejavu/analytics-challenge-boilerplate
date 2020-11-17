@@ -1,16 +1,15 @@
 # Analytics Dashboard
 
 ## Introduction
-
-**This project is based on the existing project "Cypress Real World App".
-- added an admin user functionality
--  database endpoints to handle events 
-- manipulated event data in order to display a dashboard with event tiles.
-- created tiles using recharts library, google maps api , material-ui.
+This project is a feature that was built on the existing project "Cypress Real World App".  
+The feature is called "Analytics Dashboard" and is a fullstack Event Analysis system that works by collecting events sent to the platform and analysing the data.  
+the analysed data is showcased by corresponding tiles in the FE side of the application.  
+In order to view the Dashboard you need to log in to the site with a user that has admin privileges.  
+(user provided below).
 
 ## Getting Started
 
-Fork this repo and build your project on top of it.   
+Fork this repo  
 you can use `npm run init` __in the project root__ to download both the client and server dependencies, or :   
 - Setup server  
     1. `cd server`  
@@ -25,9 +24,9 @@ you can use `npm run init` __in the project root__ to download both the client a
 
 - Note: do not delete the root folder's package.json, it is necessary.
   
-# admin credentials :
-  ## username: admin123
-  ## password: password
+## Admin Credentials :
+  - username: admin123
+  - password: password
 
 # walkthrough of the feature
 1. login with admin credentials : 
